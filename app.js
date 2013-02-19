@@ -5,10 +5,10 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
   , fs = require('fs')
+  , twitter = require('./lib/twitter/twitter.js').Twitter
 
 var app = express()
 
@@ -43,8 +43,29 @@ app.configure('development', function(){
   app.use(express.errorHandler())
 })
 
-app.get('/', routes.index)
-app.get('/users', user.list)
+app.get('/', function(res,res,next){
+  res.render('index')
+})
+
+app.post('/twitter/fetch', function(req,res,next){
+
+  // Example of getting tweets
+  var query = req.body['tweet-query']
+    , lat = req.body['tweet-lat']
+    , lon = req.body['tweet-lon']
+    
+  twitter.getGeoTweets(query,lat,lon,0.1,res,function getGeoTweetsCb(err,data){
+    
+    if(err){
+      return res.send(500)
+    }
+    console.dir(data)
+    return res.json(data)
+    
+  })
+  
+})
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'))

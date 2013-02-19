@@ -5,12 +5,12 @@ Eventboard Twitter Plugin
 0. Create your app with Twitter:  https://dev.twitter.com/apps/
 1. Create your `twitter-config.json`.  It needs to contain:
 {
-  "access_token": "14814762-40QLGrlw8QL2Hso2wxeCEupdJcob7Z8UADUflU6CF",
-  "access_token_secret":"uDZ9eTUtUqPNHGKS7auv5eAZqhvxodbzwYbo18kuI",
-  "consumer_key": "n2F1y6Z3CRB6bb4cbp7H1Q",
-  "consumer_secret": "OtUrVofa9JkYH9Id5CljqSSozldsNsxnvGv43K4yA",
+  "access_token": "YOUR_TOKEN",
+  "access_token_secret":"YOUR_TOKEN_SECRET",
+  "consumer_key": "YOUR_CONSUMER_KEY_",
+  "consumer_secret": "YOUR_CONSUMER_SECRET",
   "request_token_URL": "https://api.twitter.com/oauth/request_token",
   "authorize_URL_https":"//api.twitter.com/oauth/authorize",
   "access_token_URL_https":"//api.twitter.com/oauth/access_token",
-  "callback_URL": "http://eventboard.jit.su/twitter/oauth"
+  "callback_URL": "YOUR_CALLBACK_URL"
 }

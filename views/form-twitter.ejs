@@ -1,0 +1,18 @@
+<section role="twitter" id="twitter">
+  <div class="pad maxwidthcenter">
+    <h2 class="header-block">Get Tweets</h2>
+    <form id="get-tweets-form" action="/signup" method="POST">
+      <fieldset>
+        <input type="hidden" name="tweet-lat" id="tweet-lat" value="">
+        <input type="hidden" name="tweet-lon" id="tweet-lon" value="">
+        <div class="form-item">
+            <label for="tweet-query">Tweet Query</label>
+            <input name="tweet-query" id="tweet-query" type="name" required="true" value=""></input>
+        </div>
+        <div class="form-item">
+          <button id="get-tweets-button"><span>Get Tweets!</span></button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</section>
