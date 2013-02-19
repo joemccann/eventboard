@@ -230,6 +230,10 @@ li {
   font-size: 1.4em;
   font-weight: 100;
 }
+li {
+  margin: 2% auto;
+  text-align: left;
+}
 header {
   background-color: #ececec;
   background-color: rgba(236,236,236,0.2);
@@ -270,6 +274,26 @@ section [role="main"] {
   text-align: center;
   padding-bottom: 2.5%;
   max-width: 960px;
+}
+.page-wrap {
+  display: -webkit-box;
+/* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;
+/* OLD - Firefox 19- (doesn't work very well) */
+  display: -ms-flexbox;
+/* TWEENER - IE 10 */
+  display: -webkit-flex;
+/* NEW - Chrome */
+  display: flex;
+/* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+.box {
+  width: 100%;
+/* No flex here, other cols take up remaining space */
+  -moz-box-flex: 1;
+/* Without this, Firefox 19- expands to widest paragraph, overrides width */
+  background: #fff;
+  padding: 1em;
 }
 fieldset {
   border: none;
@@ -437,9 +461,6 @@ button span {
     -ms-transform: translate(50%, 25%) scale(0.55, 0.55);
     transform: translate(50%, 25%) scale(0.55, 0.55);
   }
-  section [role="social"] {
-    margin: 7% 0;
-  }
 }
 @media only screen and (max-width: 40em) {
   #logo {
@@ -448,12 +469,6 @@ button span {
     -o-transform: translate(42%, 23%) scale(0.4, 0.4);
     -ms-transform: translate(42%, 23%) scale(0.4, 0.4);
     transform: translate(42%, 23%) scale(0.4, 0.4);
-  }
-  section [role="social"] {
-    margin: 8% 0;
-  }
-  #details {
-    margin-bottom: 7%;
   }
 }
 @media only screen and (max-width: 30em) {
@@ -464,39 +479,10 @@ button span {
     -ms-transform: translate(28%, 17%) scale(0.3, 0.3);
     transform: translate(28%, 17%) scale(0.3, 0.3);
   }
-  section [role="main"] {
-    padding: 0 2%;
-    width: 96%;
-  }
-  section [role="social"] {
-    margin: 10% 0;
-  }
-  #details {
-    margin-bottom: 15%;
-  }
-  .maxwidthcenter {
-    max-width: 320px;
-  }
-  .sponsor {
-    margin: 10% auto;
-  }
 }
 @media only screen and (max-width: 20em) {
   .pad {
     width: 96%;
     padding: 0 2%;
-  }
-  #logo {
-    -webkit-transform: translate(12%, 7%) scale(0.3, 0.3);
-    -moz-transform: translate(12%, 7%) scale(0.3, 0.3);
-    -o-transform: translate(12%, 7%) scale(0.3, 0.3);
-    -ms-transform: translate(12%, 7%) scale(0.3, 0.3);
-    transform: translate(12%, 7%) scale(0.3, 0.3);
-  }
-  section [role="location"] {
-    margin: 3% auto 10%;
-  }
-  .sponsor {
-    margin: 12% auto;
   }
 }
