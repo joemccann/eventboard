@@ -112,9 +112,23 @@ $(document).ready(function(){
   
   var Render = function(){
     
+    var _tweetsTemplate
+      , _instagramTemplate
+    
+    (function(){
+      // prefetch handlebars templates
+      $.get('/js/templates/tweets.handlebars', function(data){
+        _tweetsTemplate = Handlebars.compile(data)
+      })
+      
+    })()
+    
     return {
       tweets: function(data){
-        alert(data.results.length)
+        $('#tweet-results').html( _tweetsTemplate( data ) )
+      },
+      instagrams: function(data){
+        $('#instagram-results').html( _tweetsTemplate( data ) )
       }
     }
   }

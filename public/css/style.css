@@ -230,6 +230,10 @@ li {
   font-size: 1.4em;
   font-weight: 100;
 }
+li {
+  margin: 2% auto;
+  text-align: left;
+}
 header {
   background-color: #ececec;
   background-color: rgba(236,236,236,0.2);
