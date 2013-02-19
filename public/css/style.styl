@@ -1,0 +1,109 @@
+@import 'variables'
+@import 'normalize'
+
+*,
+*:after,
+*:before
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+  box-sizing: border-box
+
+*
+  -webkit-transition: all 0.3s ease
+  -moz-transition: all 0.3s ease
+  -o-transition: all 0.3s ease
+  transition: all 0.3s ease
+
+html, body
+  height 100%
+
+body
+  font-size: 100%
+  font-family: 'LeagueGothicRegular', Helvetica, Arial, sans-serif
+  background $bgColor url('/img/cream_dust.png') repeat top left scroll
+  color #444
+  
+img
+  max-width 100%
+  
+a
+  color: $linkColor
+  text-decoration none
+
+.block
+  display block
+  
+.no-touch a:hover
+  color: darken(#29d4c7,2)
+  text-decoration underline
+
+.louder
+  color $linkColor
+  font-size 1.125em
+
+.maxwidthcenter
+  width 100%
+  max-width 480px
+  margin 0 auto
+
+.justify
+  text-align justify
+
+.subtleBoxShadow
+  -webkit-box-shadow: 0 8px 6px -6px rgba(0,0,0, 0.56)
+  -moz-box-shadow: 0 8px 6px -6px black
+  -webkit-box-shadow: 0 1px 6px 1px rgba(0,0,0, 0.56)
+
+.imgstyle
+  boxShadow(8px 8px 6px -6px rgba(0,0,0, 0.56))
+  margin 0 auto
+
+p, li
+  font-size 1.4em
+  font-weight 100  
+
+header
+  background-color darken($bgColor,3)
+  background-color rgba(236,236,236,0.2)
+  padding 1% 2.5%
+
+h1
+  font-size 3.6em
+  font-weight normal
+  line-height 1.2
+  text-transform uppercase
+  text-align left
+  margin 0
+
+h1 span
+  color lighten($linkColor,10)
+  text-align left
+  
+h2
+  font-size 2.4em
+  font-weight 200
+  line-height 1.1
+
+ul
+  list-style-type none
+  margin 0
+  padding 0
+
+footer
+  margin 3% auto
+  text-align center
+  width: 100%
+
+section [role="main"]
+  width 100%
+
+#main
+  margin 0 auto
+  text-align center
+  padding-bottom 2.5%
+  max-width 960px
+  
+
+@import 'forms'  
+@import 'buttons'
+@import 'responsive'
