@@ -275,6 +275,26 @@ section [role="main"] {
   padding-bottom: 2.5%;
   max-width: 960px;
 }
+.page-wrap {
+  display: -webkit-box;
+/* OLD - iOS 6-, Safari 3.1-6 */
+  display: -moz-box;
+/* OLD - Firefox 19- (doesn't work very well) */
+  display: -ms-flexbox;
+/* TWEENER - IE 10 */
+  display: -webkit-flex;
+/* NEW - Chrome */
+  display: flex;
+/* NEW, Spec - Opera 12.1, Firefox 20+ */
+}
+.box {
+  width: 100%;
+/* No flex here, other cols take up remaining space */
+  -moz-box-flex: 1;
+/* Without this, Firefox 19- expands to widest paragraph, overrides width */
+  background: #fff;
+  padding: 1em;
+}
 fieldset {
   border: none;
   max-width: 320px;

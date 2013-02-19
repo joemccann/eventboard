@@ -9,6 +9,8 @@ var express = require('express')
   , path = require('path')
   , fs = require('fs')
   , twitter = require('./lib/twitter/twitter.js').Twitter
+  , instagram = require('./lib/instagram/instagram.js').Instagram
+  
 
 var app = express()
 
@@ -33,6 +35,8 @@ app.configure(function(){
   app.locals.node_version = process.version.replace('v', '')
   app.locals.app_version = package.version
   app.locals.env = process.env.NODE_ENV
+  
+  app.locals.instagram_token = require('./lib/instagram/instagram-token-ignore.json')
 
   // Concat/minify
   smoosher()
@@ -46,6 +50,62 @@ app.configure('development', function(){
 app.get('/', function(res,res,next){
   res.render('index')
 })
+
+app.get('/instagram/token', function(req,res,next){
+    
+    var auth_url = instagram.oauth.authorization_url({
+      scope: 'basic', 
+      display: 'touch'
+    })
+
+    return res.render('auth-instagram', { 
+        title: 'PhotoPipe - Instagram Connect'
+      , auth_url: auth_url}
+      )
+})
+
+app.get('/instagram/oauth', function(req,res,next){
+  
+  instagram.oauth.ask_for_access_token({
+      request: req,
+      response: res,
+      complete: function(params, response){
+        console.log('complete')
+        // console.dir(params)
+        // Set the JSON object response to the _user object
+        // for access later...
+        var filepath = path.join( __dirname, "/lib/instagram/instagram-token-ignore.json")
+        console.log(filepath)
+        fs.writeFile( 
+            filepath, 
+            JSON.stringify(params), 
+            function(err,data){
+              if(err) {
+                console.log('error trying to write')
+                return console.error(err)
+              }
+              console.log('file written')
+              
+              // Head back to instagram page, but this time, we'll enter
+              // the else block
+              return res.redirect('/')
+              
+            })
+        
+
+      },
+      error: function(errorMessage, errorObject, caller, response){
+        console.log('Error!')
+        // errorMessage is the raised error message
+        // errorObject is either the object that caused the issue, or the nearest neighbor
+        console.error(errorMessage)
+        // res.redirect('/?error=true&type=instagram') 
+      }
+    })
+    return null
+  
+})
+
 
 app.post('/twitter/fetch', function(req,res,next){
 
@@ -66,6 +126,56 @@ app.post('/twitter/fetch', function(req,res,next){
   
 })
 
+app.post('/instagram/fetch/geo', function(req,res,next){
+
+  // Example of getting geo instagrams
+  var lat = req.body['instagram-lat']
+    , lon = req.body['instagram-lon']
+    
+    // function(query, lat, lon, distanceInMeters, token, req, res, cb)
+  instagram.eventboard.executeGeoSearch(
+      lat,
+      lon,
+      50,
+      app.locals.instagram_token.access_token,
+      req,
+      res,
+      function getGeoInstagramCb(err,data){
+    
+        if(err){
+          console.error("error in getGeoInstagramCb...")
+          console.error(err)
+          return res.send(500)
+        }
+        // console.dir(data)
+        return res.json(data)
+      }
+    )
+  
+})
+
+app.post('/instagram/fetch/tags', function(req,res,next){
+
+  // Example of getting tweets
+  var query = req.body['instagram-query-tags']
+    
+    // function(query, lat, lon, distanceInMeters, token, req, res, cb)
+  instagram.eventboard.executeTagsSearch(
+      query,
+      app.locals.instagram_token.access_token,
+      req,
+      res,
+      function getTagsInstagramCb(err,data){
+    
+        if(err){
+          return res.send(500)
+        }
+        // console.dir(data)
+        return res.json(data)
+      }
+    )
+  
+})
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'))

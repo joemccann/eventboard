@@ -8,7 +8,6 @@ $(document).ready(function(){
 
   var render = null
 
-  
   // Check for touch events (note: this is not exhaustive)
   if( !('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch){
     document.documentElement.className = "no-touch"
@@ -47,7 +46,7 @@ $(document).ready(function(){
 
       $getTweetsButton.attr('disabled', true)
       
-      $('.error').removeClass('error')
+      $getTweetsForm.find('.error').removeClass('error')
       
       var $tweetQuery = $('#tweet-query')
 
@@ -101,24 +100,137 @@ $(document).ready(function(){
 
     }) // end submit()
     
-    
   }
 
   /* End Tweets Form *******************************************/
 
 
+  /* Handle Instagram Geo Form *********************************/
+  
+  var $getInstagramGeoForm = $('#get-instagrams-geo-form')
+    , $getInstagramGeoButton = $('#get-instagrams-geo-button')
+    
+  if($getInstagramGeoForm.length){
+    
+    var getInstagramGeoHandler = function(e){
 
-  /* Renderer Module ****************************************/
+      $getInstagramGeoButton.attr('disabled', true)
+      
+      $getInstagramGeoForm.find('.error').removeClass('error')
+            
+      // Populate lat/lon if it's there...
+      $('#instagram-lat').val( window.EB.position ? window.EB.position.latitude : '')
+      $('#instagram-lon').val( window.EB.position ? window.EB.position.longitude : '')
+      
+      $.post('/instagram/fetch/geo', $getInstagramGeoForm.serialize(), function(resp){
+        
+        // This is a weird delta between zepto and jquery...
+        var r = (typeof resp === 'string') ? JSON.parse(resp) : resp
+        
+        log(r)
+        
+        $getInstagramGeoForm.find('input').val('')
+        
+        $getInstagramGeoButton.removeAttr('disabled')
+        
+        render.instagramsGeo(r)
+        
+      }) // end post
+      
+      return false
+      
+    }
+    
+    $getInstagramGeoButton.on('click', function(e){
+      getInstagramGeoHandler(e)
+      e.preventDefault()
+      return false
+
+    }) // end click()
+    
+    $getInstagramGeoForm.on('submit', function(e){
+      getInstagramGeoHandler(e)
+      e.preventDefault()
+      return false
+
+    }) // end submit()
+    
+  }
+
+  /* End Instagram Geo Form ************************************/
+
+
+  /* Handle Instagram Tags Form ********************************/
+  
+  var $getInstagramTagsForm = $('#get-instagrams-tags-form')
+    , $getInstagramTagsButton = $('#get-instagrams-tags-button')
+    
+  if($getInstagramTagsForm.length){
+    
+    var getInstagramTagsHandler = function(e){
+
+      $getInstagramTagsButton.attr('disabled', true)
+      
+      $getInstagramTagsForm.find('.error').removeClass('error')
+            
+      $.post('/instagram/fetch/tags', $getInstagramTagsForm.serialize(), function(resp){
+        
+        // This is a weird delta between zepto and jquery...
+        var r = (typeof resp === 'string') ? JSON.parse(resp) : resp
+        
+        log(r)
+        
+        $getInstagramTagsForm.find('input').val('')
+        
+        $getInstagramTagsButton.removeAttr('disabled')
+        
+        render.instagramsTags(r)
+        
+      }) // end post
+      
+      return false
+      
+    }
+    
+    $getInstagramTagsButton.on('click', function(e){
+      getInstagramTagsHandler(e)
+      e.preventDefault()
+      return false
+
+    }) // end click()
+    
+    $getInstagramTagsForm.on('submit', function(e){
+      getInstagramTagsHandler(e)
+      e.preventDefault()
+      return false
+
+    }) // end submit()
+    
+  }
+
+  /* End Instagram Tags Form ***********************************/
+
+
+  /* Renderer Module *******************************************/
   
   var Render = function(){
     
     var _tweetsTemplate
-      , _instagramTemplate
+      , _instagramGeoTemplate
+      , _instagramTagsTemplate
     
     (function(){
       // prefetch handlebars templates
       $.get('/js/templates/tweets.handlebars', function(data){
         _tweetsTemplate = Handlebars.compile(data)
+      })
+
+      $.get('/js/templates/instagrams-geo.handlebars', function(data){
+        _instagramGeoTemplate = Handlebars.compile(data)
+      })
+
+      $.get('/js/templates/instagrams-tags.handlebars', function(data){
+        _instagramTagsTemplate = Handlebars.compile(data)
       })
       
     })()
@@ -127,8 +239,11 @@ $(document).ready(function(){
       tweets: function(data){
         $('#tweet-results').html( _tweetsTemplate( data ) )
       },
-      instagrams: function(data){
-        $('#instagram-results').html( _tweetsTemplate( data ) )
+      instagramsGeo: function(data){
+        $('#instagram-geo-results').html( _instagramGeoTemplate( data ) )
+      },
+      instagramsTags: function(data){
+        $('#instagram-tags-results').html( _instagramTagsTemplate( data ) )
       }
     }
   }
