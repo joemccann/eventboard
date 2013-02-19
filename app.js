@@ -15,7 +15,7 @@ var express = require('express')
 var app = express()
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 3200)
+  app.set('port', process.env.PORT || 80)
   app.set('views', __dirname + '/views')
   app.set('view engine', 'ejs')
   app.use(express.favicon())
@@ -118,7 +118,7 @@ app.post('/twitter/fetch', function(req,res,next){
     if(err){
       return res.send(500)
     }
-    console.dir(data)
+    // console.dir(data)
     return res.json(data)
     
   })

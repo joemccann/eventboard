@@ -180,11 +180,12 @@ $(document).ready(function(){
         
         log(r)
         
-        $getInstagramTagsForm.find('input').val('')
-        
         $getInstagramTagsButton.removeAttr('disabled')
         
-        render.instagramsTags(r)
+        render.instagramsTags(r, $getInstagramTagsForm.find('input').val() )
+        
+        $getInstagramTagsForm.find('input').val('')
+        
         
       }) // end post
       
@@ -242,8 +243,9 @@ $(document).ready(function(){
       instagramsGeo: function(data){
         $('#instagram-geo-results').html( _instagramGeoTemplate( data ) )
       },
-      instagramsTags: function(data){
+      instagramsTags: function(data, query){
         $('#instagram-tags-results').html( _instagramTagsTemplate( data ) )
+        $('#instagram-tags-results h2 span').html( query )
       }
     }
   }

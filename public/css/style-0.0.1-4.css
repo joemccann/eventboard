@@ -233,6 +233,8 @@ li {
 li {
   margin: 2% auto;
   text-align: left;
+  border: 2px solid #ddd;
+  padding: 2%;
 }
 header {
   background-color: #ececec;
