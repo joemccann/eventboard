@@ -106,7 +106,6 @@ app.get('/instagram/oauth', function(req,res,next){
   
 })
 
-
 app.post('/twitter/fetch', function(req,res,next){
 
   // Example of getting tweets
@@ -168,6 +167,8 @@ app.post('/instagram/fetch/tags', function(req,res,next){
       function getTagsInstagramCb(err,data){
     
         if(err){
+          console.error("error in getGeoInstagramCb...")
+          console.error(err)
           return res.send(500)
         }
         // console.dir(data)
@@ -235,4 +236,3 @@ function smoosher(){
   } // end if production env
   
 }
-

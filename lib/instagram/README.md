@@ -9,3 +9,5 @@ Eventboard Instagram Plugin
   "redirect_uri":"YOUR_REDIRECT_URI"
 }
 2. Install the instagram node module `npm i instagram-node-lib`
+3. You will need to navigate to `http://localhost:3200/instagram/token` to obtain your token.
+3. An `instagram-token-ignore.json` file will be created in this directory with the token stored for future use.
