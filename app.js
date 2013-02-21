@@ -43,7 +43,7 @@ app.configure(function(){
 
   // Concat/minify
   cleaner()
-  process.nextTick(smoosher)
+  setTimeout(smoosher, 500)
   
 })
 
