@@ -8,14 +8,26 @@ var express = require('express')
   , http = require('http')
   , path = require('path')
   , fs = require('fs')
+  , walkdir = require('walkdir')
   , twitter = require('./lib/twitter/twitter.js').Twitter
+  , pinterest = require('./lib/pinterest/pinterest.js').Pinterest
   , instagram = require('./lib/instagram/instagram.js').Instagram
   
 
 var app = express()
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 80)
+  
+  var package = require(path.resolve(__dirname, './package.json'))
+  
+  // Setup local variables to be available in the views.
+  app.locals.title = "Eventboard - Metrics for Your Events"
+  app.locals.description = "Eventboard is a dashboard for metrics that are captured from live events."
+  app.locals.node_version = process.version.replace('v', '')
+  app.locals.app_version = package.version
+  app.locals.env = process.env.NODE_ENV
+  
+  app.set('port', process.env.PORT || 80) // 80 for oauth stuff...
   app.set('views', __dirname + '/views')
   app.set('view engine', 'ejs')
   app.use(express.favicon())
@@ -27,19 +39,11 @@ app.configure(function(){
   app.use(require('stylus').middleware(__dirname + '/public'))
   app.use(express.static(path.join(__dirname, 'public')))
 
-  var package = require(path.resolve(__dirname, './package.json'))
-  
-  // Setup local variables to be available in the views.
-  app.locals.title = "Eventboard - Metrics for Your Events"
-  app.locals.description = "Eventboard is a dashboard for metrics that are captured from live events."
-  app.locals.node_version = process.version.replace('v', '')
-  app.locals.app_version = package.version
-  app.locals.env = process.env.NODE_ENV
-  
   app.locals.instagram_token = require('./lib/instagram/instagram-token-ignore.json')
 
   // Concat/minify
-  smoosher()
+  cleaner()
+  process.nextTick(smoosher)
   
 })
 
@@ -178,10 +182,55 @@ app.post('/instagram/fetch/tags', function(req,res,next){
   
 })
 
+app.post('/pinterest/fetch/pins', function(req,res,next){
+
+  // Example of getting tweets
+  var query = req.body['pinterest-query']
+    
+  pinterest.fetchPinsFromQuery(query,res,function getPins(err,data){
+    
+    if(err){
+      return res.send(500)
+    }
+    console.log('pinterest....')
+    // console.dir(data)
+    return res.json(data)
+    
+  })
+  
+})
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'))
   console.log("\nhttp://localhost:" + app.get('port'))
 })
+
+// Pass in a path of a directory to walk and a 
+// regex to match against.  The file(s) matching
+// the patter will be deleted.
+function walkAndUnlink(dirPath, regex){
+  
+  var emitter = walkdir(dirPath)
+
+  emitter.on('file',function(filename,stat){
+    if( regex.test(filename) ){
+      console.log("Removing old file: " + filename)
+      fs.unlinkSync( path.resolve( dirPath, filename) )
+    }
+  })
+  
+}
+
+// Removes old css/js files.
+function cleaner(){
+  // Compress/concat files for deploy env...
+  // Need to run this locally BEFORE deploying
+  // to nodejitsu
+  if(app.locals.env === 'predeploy'){
+    walkAndUnlink( path.join(__dirname, 'public', 'css'), new RegExp(/style-/) )
+    walkAndUnlink( path.join(__dirname, 'public', 'js'), new RegExp(/eventboard-/) )
+  }
+}
 
 
 // Concats, minifies js and css for production

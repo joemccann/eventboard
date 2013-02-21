@@ -1,0 +1,22 @@
+<section role="pinterest-tag" id="pinterest-tags">
+  <div class="pad maxwidthcenter">
+    
+    <h2 class="header-block">Get Pins by Search Term</h2>
+    
+    <form id="get-pinterest-pins-form" action="/pinterest/fetch/pins" method="POST">
+      <fieldset>
+        <div class="form-item">
+            <label for="pinterest-query">Pinterest Query</label>
+            <input name="pinterest-query" id="pinterest-query" type="name" required="true" value=""></input>
+        </div>
+        <div class="form-item">
+          <button id="get-pinterests-pins-button"><span>Get Pins!</span></button>
+        </div>
+      </fieldset>
+    </form>
+    
+    <div id="pinterest-pins-results">
+    </div>
+    
+  </div>
+</section>

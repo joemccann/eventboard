@@ -1,6 +1,6 @@
 {
   "name": "eventboard",
-  "version": "0.0.1-4",
+  "version": "0.0.1-5",
   "private": true,
   "scripts": {
     "start": "node app.js"
@@ -16,7 +16,9 @@
     "request": ">=2.12.0",
     "colors": ">=0.6.0-1",
     "instagram-node-lib": ">=0.1.1",
-    "lodash": ">=1.0.0-rc.3"
+    "lodash": ">=1.0.0-rc.3",
+    "cheerio": ">=0.10.7",
+    "walkdir": ">=0.0.5"
   },
   "subdomain": "eventboard"
 }

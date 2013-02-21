@@ -212,6 +212,59 @@ $(document).ready(function(){
   /* End Instagram Tags Form ***********************************/
 
 
+  /* Handle Pinterest Pins Form ********************************/
+  
+  var $getPinterestPinsForm = $('#get-pinterest-pins-form')
+    , $getPinterestPinsButton = $('#get-pinterest-pins-button')
+    
+  if($getPinterestPinsForm.length){
+    
+    var getPinterestPinsHandler = function(e){
+
+      $getPinterestPinsButton.attr('disabled', true)
+      
+      $getPinterestPinsForm.find('.error').removeClass('error')
+            
+      $.post('/pinterest/fetch/pins', $getPinterestPinsForm.serialize(), function(resp){
+        
+        // This is a weird delta between zepto and jquery...
+        var r = (typeof resp === 'string') ? JSON.parse(resp) : resp
+        
+        log(r)
+        
+        $getPinterestPinsButton.removeAttr('disabled')
+        
+        render.pinterestPins(r, $getPinterestPinsForm.find('input').val() )
+        
+        $getPinterestPinsForm.find('input').val('')
+        
+        
+      }) // end post
+      
+      return false
+      
+    }
+    
+    $getPinterestPinsButton.on('click', function(e){
+      getPinterestPinsHandler(e)
+      e.preventDefault()
+      return false
+
+    }) // end click()
+    
+    $getPinterestPinsForm.on('submit', function(e){
+      getPinterestPinsHandler(e)
+      e.preventDefault()
+      return false
+
+    }) // end submit()
+    
+  }
+
+  /* End Pinterest Pins Form ***********************************/
+
+
+
   /* Renderer Module *******************************************/
   
   var Render = function(){
@@ -219,6 +272,7 @@ $(document).ready(function(){
     var _tweetsTemplate
       , _instagramGeoTemplate
       , _instagramTagsTemplate
+      , _pinterestPinsTemplate
     
     (function(){
       // prefetch handlebars templates
@@ -233,6 +287,10 @@ $(document).ready(function(){
       $.get('/js/templates/instagrams-tags.handlebars', function(data){
         _instagramTagsTemplate = Handlebars.compile(data)
       })
+
+      $.get('/js/templates/pinterest-pins.handlebars', function(data){
+        _pinterestPinsTemplate = Handlebars.compile(data)
+      })
       
     })()
     
@@ -246,6 +304,10 @@ $(document).ready(function(){
       instagramsTags: function(data, query){
         $('#instagram-tags-results').html( _instagramTagsTemplate( data ) )
         $('#instagram-tags-results h2 span').html( query )
+      },
+      pinterestPins: function(data, query){
+        $('#pinterest-pins-results').html( _pinterestPinsTemplate( data ) )
+        $('#pinterest-pins-results h2 span').html( query )
       }
     }
   }
