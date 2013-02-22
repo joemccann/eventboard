@@ -44,7 +44,7 @@ $(document).ready(function(){
     
     var getTweetsHandler = function(e){
 
-      $getTweetsButton.attr('disabled', true)
+      $getTweetsButton.attr('disabled', true).addClass('opacity50')
       
       $getTweetsForm.find('.error').removeClass('error')
       
@@ -58,7 +58,7 @@ $(document).ready(function(){
           .addClass('error')
           .focus()
         
-        $getTweetsButton.removeAttr('disabled')
+        $getTweetsButton.removeAttr('disabled').removeClass('opacity50')
           
         return false
       }
@@ -76,7 +76,7 @@ $(document).ready(function(){
         
         $getTweetsForm.find('input').val('')
         
-        $getTweetsButton.removeAttr('disabled')
+        $getTweetsButton.removeAttr('disabled').removeClass('opacity50')
         
         render.tweets(r)
         
@@ -114,7 +114,7 @@ $(document).ready(function(){
     
     var getInstagramGeoHandler = function(e){
 
-      $getInstagramGeoButton.attr('disabled', true)
+      $getInstagramGeoButton.attr('disabled', true).addClass('opacity50')
       
       $getInstagramGeoForm.find('.error').removeClass('error')
             
@@ -131,7 +131,7 @@ $(document).ready(function(){
         
         $getInstagramGeoForm.find('input').val('')
         
-        $getInstagramGeoButton.removeAttr('disabled')
+        $getInstagramGeoButton.removeAttr('disabled').removeClass('opacity50')
         
         render.instagramsGeo(r)
         
@@ -169,7 +169,7 @@ $(document).ready(function(){
     
     var getInstagramTagsHandler = function(e){
 
-      $getInstagramTagsButton.attr('disabled', true)
+      $getInstagramTagsButton.attr('disabled', true).addClass('opacity50')
       
       $getInstagramTagsForm.find('.error').removeClass('error')
             
@@ -180,7 +180,7 @@ $(document).ready(function(){
         
         log(r)
         
-        $getInstagramTagsButton.removeAttr('disabled')
+        $getInstagramTagsButton.removeAttr('disabled').removeClass('opacity50')
         
         render.instagramsTags(r, $getInstagramTagsForm.find('input').val() )
         
@@ -221,7 +221,7 @@ $(document).ready(function(){
     
     var getPinterestPinsHandler = function(e){
 
-      $getPinterestPinsButton.attr('disabled', true)
+      $getPinterestPinsButton.attr('disabled', true).addClass('opacity50')
       
       $getPinterestPinsForm.find('.error').removeClass('error')
             
@@ -232,7 +232,7 @@ $(document).ready(function(){
         
         log(r)
         
-        $getPinterestPinsButton.removeAttr('disabled')
+        $getPinterestPinsButton.removeAttr('disabled').removeClass('opacity50')
         
         render.pinterestPins(r, $getPinterestPinsForm.find('input').val() )
         

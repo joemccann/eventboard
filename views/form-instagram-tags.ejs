@@ -1,22 +1,20 @@
 <section role="instagram-tag" id="instagram-tags">
-  <div class="pad maxwidthcenter">
     
-    <h2 class="header-block">Get Instagrams by Tags</h2>
-    
-    <form id="get-instagrams-tags-form" action="/instagram/fetch/tags" method="POST">
-      <fieldset>
-        <div class="form-item">
-            <label for="instagram-query-tags">Instagram Query</label>
-            <input name="instagram-query-tags" id="instagram-query-tags" type="name" required="true" value=""></input>
-        </div>
-        <div class="form-item">
-          <button id="get-instagrams-tags-button"><span>Get Instagrams!</span></button>
-        </div>
-      </fieldset>
-    </form>
-    
-    <div id="instagram-tags-results">
-    </div>
-    
+  <h2 class="header-block">Get Instagrams by Tags</h2>
+  
+  <form id="get-instagrams-tags-form" action="/instagram/fetch/tags" method="POST">
+    <fieldset>
+      <div class="form-item">
+          <label for="instagram-query-tags">Instagram Query</label>
+          <input name="instagram-query-tags" id="instagram-query-tags" type="name" required="true" value=""></input>
+      </div>
+      <div class="form-item">
+        <button id="get-instagrams-tags-button"><span>Get Instagrams!</span></button>
+      </div>
+    </fieldset>
+  </form>
+  
+  <div id="instagram-tags-results" class="results-container">
   </div>
+
 </section>

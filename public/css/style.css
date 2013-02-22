@@ -225,6 +225,26 @@ a {
   box-shadow: 8px 8px 6px -6px rgba(0,0,0,0.56);
   margin: 0 auto;
 }
+.metrics-container {
+  margin: 0 auto;
+  display: table;
+}
+.metrics-container > section {
+  display: table-cell;
+  padding: 2%;
+  width: 21%;
+}
+.results-container {
+  max-height: 420px;
+  overflow: auto;
+  max-width: 320px;
+  margin: 0 auto;
+}
+.opacity50 {
+  -khtml-opacity: 0.5;
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+}
 p,
 li {
   font-size: 1.4em;
@@ -277,25 +297,90 @@ section [role="main"] {
   padding-bottom: 2.5%;
   max-width: 1920px;
 }
-.page-wrap {
+.hbox {
   display: -webkit-box;
-/* OLD - iOS 6-, Safari 3.1-6 */
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: baseline;
   display: -moz-box;
-/* OLD - Firefox 19- (doesn't work very well) */
-  display: -ms-flexbox;
-/* TWEENER - IE 10 */
-  display: -webkit-flex;
-/* NEW - Chrome */
-  display: flex;
-/* NEW, Spec - Opera 12.1, Firefox 20+ */
+  -moz-box-orient: horizontal;
+  -moz-box-align: baseline;
+  display: box;
+  box-orient: horizontal;
+  box-align: baseline;
 }
-.box {
-  width: 100%;
-/* No flex here, other cols take up remaining space */
+.hbox > * {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  display: block;
+}
+.vbox {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+}
+.vbox > * {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+  display: block;
+}
+.spacer {
+  -webkit-box-flex: 1;
   -moz-box-flex: 1;
-/* Without this, Firefox 19- expands to widest paragraph, overrides width */
-  background: #fff;
-  padding: 1em;
+  box-flex: 1;
+}
+.reverse {
+  -webkit-box-direction: reverse;
+  -moz-box-direction: reverse;
+  box-direction: reverse;
+}
+.boxFlex0 {
+  -webkit-box-flex: 0;
+  -moz-box-flex: 0;
+  box-flex: 0;
+}
+.boxFlex1,
+.boxFlex {
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+}
+.boxFlex2 {
+  -webkit-box-flex: 2;
+  -moz-box-flex: 2;
+  box-flex: 2;
+}
+.boxGroup1 {
+  -webkit-box-flex-group: 1;
+  -moz-box-flex-group: 1;
+  box-flex-group: 1;
+}
+.boxGroup2 {
+  -webkit-box-flex-group: 2;
+  -moz-box-flex-group: 2;
+  box-flex-group: 2;
+}
+.start {
+  -webkit-box-pack: start;
+  -moz-box-pack: start;
+  box-pack: start;
+}
+.end {
+  -webkit-box-pack: end;
+  -moz-box-pack: end;
+  box-pack: end;
+}
+.center {
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
+  box-pack: center;
 }
 fieldset {
   border: none;
@@ -453,6 +538,11 @@ button span {
     -o-transform: translate(65%, 33%) scale(0.7, 0.7);
     -ms-transform: translate(65%, 33%) scale(0.7, 0.7);
     transform: translate(65%, 33%) scale(0.7, 0.7);
+  }
+  .metrics-container > section {
+    display: table-row;
+    padding: 2%;
+    width: 96%;
   }
 }
 @media only screen and (max-width: 48em) {
